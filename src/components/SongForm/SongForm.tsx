@@ -61,7 +61,7 @@ const SongForm = ({setSong}: Props) => {
         try {
             const res = await fetch(url);
             const {showMore, songs, showPrevious} = await res.json();
-            setFoundSongs([songs]);
+            setFoundSongs(songs);
             setNextURL(showMore);
             setPreviousURL(showPrevious);
         } catch (err: any) {
