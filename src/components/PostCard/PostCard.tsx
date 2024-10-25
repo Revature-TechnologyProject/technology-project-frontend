@@ -36,6 +36,7 @@ export interface Post {
     score: number,
     title: string,
     song: Song
+    tags: object
 }
 
 interface Song {    
