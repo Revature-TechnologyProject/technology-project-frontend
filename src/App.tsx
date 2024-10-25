@@ -21,7 +21,6 @@ function App() {
           <Route path="/profile/:id" element={<Profile/>}/>
           <Route path="/register" element={<Register setUser={setUser}/>}/>
           <Route path="/post" element={<CreatePost/>}/>
-          <Route path="/profile/:id" element={<Profile/>}/>
         </Routes>
       </UserContext.Provider>
     </>
