@@ -15,7 +15,7 @@ const PostCard = ({post}: Props) => {
                 </div>
                 <div className="post-metadata flex align-cent justify-between">
                     <span>Score: {score}/100</span>
-                    <span> Likes: {likedBy.length}</span>
+                    <span>Likes: {likedBy.length}</span>
                 </div>
             </div>
         </Link>
