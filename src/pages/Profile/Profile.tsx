@@ -56,6 +56,9 @@ function Profile() {
                         </div>
                     </div>
                 </section>
+                <nav className="updatelink">
+                    {<NavLink to="/profile/update">Change Profile</NavLink>}
+                </nav>
                 <section id="profile-posts" className="flex g10 col">
                     <h2>Posts</h2>
                     {posts.length !== 0 ? 
@@ -70,9 +73,6 @@ function Profile() {
             :
             <p>Loading / Profile Not Found</p>
             }
-            <nav>
-                {<NavLink to="/profile/update">Update Profile</NavLink>}
-            </nav>
         </main>
     )
 }
