@@ -16,7 +16,7 @@ const PostCard = ({post}: Props) => {
                 </div>
                 <div className="post-metadata flex align-cent justify-between">
                     <span>Score: {score}/100</span>
-                    <span>Likes: {likedBy.length}</span>
+                    <span>Likes: {likedBy.reduce((n, {like}:any) => n + like, 0)}</span>
                 </div>
             </div>
         </Link>
@@ -37,5 +37,6 @@ export interface Post {
     score: number,
     title: string,
     song: Song
+    tags: object
 }
 export default PostCard;
