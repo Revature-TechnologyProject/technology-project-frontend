@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import NavLink from "../NavLink";
 import "./Header.css";
 import { UserContext } from "../../context/userContext";
+import Avatar from "../Avatar";
 
 function Header() {
     const user = useContext(UserContext);
@@ -11,17 +12,19 @@ function Header() {
     return(
         <header>
             <Link to="/" id="home">
-                Some Catchy App Name or Logo
+                The Song Study Site
             </Link>
             <nav>
-                {user && <NavLink to="/post">Post</NavLink>}
-                {/* Todo: Change user.username to link to the profile page when done*/}
                 {!user ? 
                     <>
                         <NavLink to="/login">Login</NavLink>
                         <NavLink to="/register">Register</NavLink>
                     </> : 
-                    user.username} 
+                    <>
+                        <NavLink to="/post">Post</NavLink>
+                        <Link to={`/profile/${user.itemID}`}><Avatar alt="Profile Image" src={user.profileImage}/></Link>
+                    </>
+                } 
             </nav>
         </header>
     )
