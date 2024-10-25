@@ -1,0 +1,7 @@
+.icon-image {
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: 50%;
+    border: solid var(--secondary-color) 1px;
+    height: 40px;
+}

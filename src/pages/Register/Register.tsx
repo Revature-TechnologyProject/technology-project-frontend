@@ -17,7 +17,7 @@ function Register({ setUser }: props) {
 
     async function register(username: string, password: string) {
         try {
-            const { token, user } = await fetch("post", "/users/", { username, password });
+            const { token, user } = await fetch("post", "/users/", {}, { username, password });
             localStorage.setItem("token", token);
             setUser(user);
             setDisplaySuccess(true);

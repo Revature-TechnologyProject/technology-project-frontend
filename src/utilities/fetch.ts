@@ -1,6 +1,6 @@
 const BASE_URL = "http://localhost:3001"
 
-async function fetchJson(method: string, path: string, body?: {}, q?: {}) {
+async function fetchJson(method: string, path: string, q?: {}, body?: {}) {
     const options: RequestInit= {
         headers: createHeaders(),
         mode: "cors",

@@ -21,8 +21,8 @@ describe("Register Page", () => {
 
     test("Renders form elements for username, password, and submit", () => {
         const submitButton = screen.getByRole("button");
-        const usernameInput = screen.getByLabelText("Username:");
-        const passwordInput = screen.getByLabelText("Password:");
+        const usernameInput = screen.getByLabelText("Username*");
+        const passwordInput = screen.getByLabelText("Password*");
 
         expect(submitButton).toBeInTheDocument();
         expect(usernameInput).toBeInTheDocument();
