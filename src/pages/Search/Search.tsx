@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import "./Search.css";
 import SearchForm from "../../components/SearchForm";
@@ -10,28 +10,32 @@ function Search() {
     const [error, setError] = useState();
     const [displaySuccess, setDisplaySuccess] = useState(false);
     const [result, setResult] = useState<any>([]);
-    const [page, setPage] = useState(5);
-    const [postsFound, setPostsFound] = useState<any>([]);
+    const [page, setPage] = useState(-1);
+    const [postsFound, setPostFound] = useState([]);
     const [stillMore, setStillMore] = useState(true);
+
+    useEffect(() => {
+        loadMore()
+    }, [postsFound]);
 
     async function search(tags: string, inclusive: string) {
         try {
             setPage(5);
+            setStillMore(true);
             if (inclusive !== "1"){
                 inclusive = "0";
             }
             const {Posts} = await fetch("get", `/posts/tags/search?tags=${tags}&inclusive=${inclusive}`);
-            setPostsFound(Posts);
+            setPostFound(Posts);
             setDisplaySuccess(true);
             setError(undefined);
-            loadMore();
         } catch (err: any) {
             setError(err.error);
         }
     }
 
     async function loadMore(){
-        if (page > postsFound.length){
+        if (page >= postsFound.length){
             setPage(postsFound.length);
             setStillMore(false);
         }
