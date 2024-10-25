@@ -106,7 +106,8 @@ const SongForm = ({setSong}: Props) => {
 
     return (
         <>
-        {foundSongs.length === 0 ?
+        {foundSongs.length === 0 ? <>
+            <small>At least one field must be filled out</small>
             <form onSubmit={findSong}>
                 <div className="form-group">
                     <label htmlFor="song">Song</label>
@@ -137,6 +138,7 @@ const SongForm = ({setSong}: Props) => {
                 {songError && <small className="error">{songError}</small>}
                 <button>Search for Songs</button>
             </form>
+            </>
         :
             <div>
                 {foundSongs.map((song) => {
