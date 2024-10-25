@@ -43,8 +43,10 @@ const SongForm = ({setSong}: Props) => {
     const findSong = async (e: any) => {
         e.preventDefault();
         try {
-            console.log(songQuery);
             const {showMore, songs, showPrevious} = await fetchJson("get", "/songs", songQuery);
+            if (songs.length === 0) {
+                setSongError("No Songs Found");
+            }
             setFoundSongs(songs);
             setNextURL(showMore);
             setPreviousURL(showPrevious);
