@@ -5,7 +5,6 @@ import Header from './components/Header';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
-import Profile from './pages/Profile';
 import { User, UserContext } from './context/userContext';
 import CreatePost from './pages/Post';
 
