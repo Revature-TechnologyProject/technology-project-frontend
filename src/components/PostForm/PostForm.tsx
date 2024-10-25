@@ -1,20 +1,24 @@
 import React, {useEffect, useState} from "react";
 
 import "./PostForm.css";
+import fetch from "../../utilities/fetch";
+import { Song } from "../SongForm/SongForm";
 
 export interface PostDetails {
     title: string,
     score: number,
     text: string,
+    song: Song,
     tags?: string[]
 }
 
 interface props {
+    song: Song,
     onSubmit: ({}: PostDetails) => any,
     error: string | undefined
 };
 
-function PostForm({onSubmit, error}: props) {
+function PostForm({song, onSubmit, error}: props) {
     const [title, setTitle] = useState("");
     const [score, setScore] = useState(-1);
     const [description, setDesciption] = useState("");
@@ -30,7 +34,7 @@ function PostForm({onSubmit, error}: props) {
             // Remove empty tag (Happens when you do ,,,,);
             tagSet.delete('');
         }
-        onSubmit({title, score, text: description, tags: Array.from(tagSet)});
+        onSubmit({title, score, text: description, tags: Array.from(tagSet), song});
     } 
 
     return(
