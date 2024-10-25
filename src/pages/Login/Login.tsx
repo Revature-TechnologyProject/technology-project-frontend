@@ -17,7 +17,7 @@ function Login({setUser}: props) {
 
     async function login(username: string, password: string) {
         try {
-            const {token, user} = await fetch("post", "/users/login", {username, password});
+            const {token, user} = await fetch("post", "/users/login", {}, {username, password});
             localStorage.setItem("token", token);
             setUser(user);
             setDisplaySuccess(true);
