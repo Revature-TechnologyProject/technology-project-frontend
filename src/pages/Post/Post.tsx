@@ -14,7 +14,7 @@ function Post() {
 
     async function post(postDetails: PostDetails) {
         try {
-            const {post} = await fetch("post", "/posts", postDetails);
+            const {post} = await fetch("post", "/posts", {}, postDetails);
             setError(undefined);
             setDisplaySuccess(true);
             setTimeout(() => {
