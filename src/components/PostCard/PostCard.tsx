@@ -38,5 +38,4 @@ export interface Post {
     title: string,
     song: Song
 }
-
 export default PostCard;

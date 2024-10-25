@@ -16,16 +16,15 @@ function Header() {
             </Link>
             <nav>
                 {!user ? 
-                <>
-                    <NavLink to="/login">Login</NavLink> 
-                    <NavLink to="/register">Register</NavLink>
-                </>
-                  :
-                <> 
-                    <NavLink to="/post">Post</NavLink>
-                    <Link to={`/profile/${user.itemID}`}><Avatar alt="Profile Image" src={user.profileImage}/></Link>
-                </>
-                }
+                    <>
+                        <NavLink to="/login">Login</NavLink>
+                        <NavLink to="/register">Register</NavLink>
+                    </> : 
+                    <>
+                        <NavLink to="/post">Post</NavLink>
+                        <Link to={`/profile/${user.itemID}`}><Avatar alt="Profile Image" src={user.profileImage}/></Link>
+                    </>
+                } 
             </nav>
         </header>
     )
