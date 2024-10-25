@@ -33,7 +33,7 @@ function PostDetails() {
                         </div>
                         <div className="post-metadata flex align-cent justify-between">
                             <span>Score: {post.score}/100</span>
-                            <span>Likes: {post.likedBy.length}</span>
+                            <span>Likes: {post.likedBy.reduce((n, {like}:any) => n + like, 0)}</span>
                         </div>
                         <p>
                             {post.description}
