@@ -43,16 +43,19 @@ function PostDetails() {
     async function like(){
         try{
             await fetch("put", `/posts/${id}/likes`, {}, {like: 1});
-            if (likes){
+            if (!likes){
+                setLikes(0+1);
+            }
+            else {
                 if (alreadyDisliked){
                     setLikes(likes+2);
                 }
                 else{
                     setLikes(likes+1);
                 }
-                setAlreadyLiked(true);
-                setAlreadyDisliked(false);
             }
+            setAlreadyLiked(true);
+            setAlreadyDisliked(false);
         }
         catch{}
     }
@@ -60,16 +63,19 @@ function PostDetails() {
     async function dislike(){
         try{
             await fetch("put", `/posts/${id}/likes`, {}, {like: -1});
-            if (likes){
+            if (!likes){
+                setLikes(0-1);
+            }
+            else {
                 if (alreadyLiked){
                     setLikes(likes-2);
                 }
                 else{
                     setLikes(likes-1);
                 }
-                setAlreadyLiked(false);
-                setAlreadyDisliked(true);
             }
+            setAlreadyLiked(false);
+            setAlreadyDisliked(true);
         }
         catch{}
     }
