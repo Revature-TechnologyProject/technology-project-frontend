@@ -7,12 +7,9 @@ import { useParams } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 
 function PostDetails() {
-    const user = useContext(UserContext);
     const { id } = useParams();
     const [post, setPost] = useState<Post | undefined>();
-    const [likes, setLikes] = useState(post?.likedBy.reduce((n, {like}:any) => n + like, 0));
-    const [alreadyLiked, setAlreadyLiked] = useState(false);
-    const [alreadyDisliked, setAlreadyDisliked] = useState(false);
+    const [likes, setLikes] = useState(0);
 
     useEffect(() => {
         const getPost = async () => {
@@ -20,42 +17,24 @@ function PostDetails() {
                 const result = await fetch("get", `/posts/${id}`);
                 const foundPost = result.post;
                 setPost(foundPost);
-                setLikes(foundPost?.likedBy.reduce((n:any, {like}:any) => n + like, 0));
-                for (const u of foundPost.likedBy){
-                    if (u.userID == user?.itemID){
-                        if (u.like == -1){
-                            setAlreadyDisliked(true);
-                            break;
-                        }
-                        else{
-                            setAlreadyLiked(true);
-                            break;
-                        }
-                    }
-                }
+                const total = foundPost?.likedBy.reduce((n:any, {like}:any) => n + like, 0);
+                setLikes(total);
             } catch { }
         };
         getPost();
     }, [id]);
 
-    useEffect(() => {}, [likes]);
+    useEffect(() => {
+    }, [likes]);
 
     async function like(){
         try{
             await fetch("put", `/posts/${id}/likes`, {}, {like: 1});
-            if (!likes){
-                setLikes(0+1);
-            }
-            else {
-                if (alreadyDisliked){
-                    setLikes(likes+2);
-                }
-                else{
-                    setLikes(likes+1);
-                }
-            }
-            setAlreadyLiked(true);
-            setAlreadyDisliked(false);
+            const result = await fetch("get", `/posts/${id}`);
+            const foundPost = result.post;
+            setPost(foundPost);
+            const total = foundPost?.likedBy.reduce((n:any, {like}:any) => n + like, 0);
+            setLikes(total);
         }
         catch{}
     }
@@ -63,19 +42,11 @@ function PostDetails() {
     async function dislike(){
         try{
             await fetch("put", `/posts/${id}/likes`, {}, {like: -1});
-            if (!likes){
-                setLikes(0-1);
-            }
-            else {
-                if (alreadyLiked){
-                    setLikes(likes-2);
-                }
-                else{
-                    setLikes(likes-1);
-                }
-            }
-            setAlreadyLiked(false);
-            setAlreadyDisliked(true);
+            const result = await fetch("get", `/posts/${id}`);
+            const foundPost = result.post;
+            setPost(foundPost);
+            const total = foundPost?.likedBy.reduce((n:any, {like}:any) => n + like, 0);
+            setLikes(total);
         }
         catch{}
     }
