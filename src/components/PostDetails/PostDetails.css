@@ -35,3 +35,7 @@
 .song-name {
     margin-block: 0;
 }
+
+.post-delete {
+    color: red;
+}

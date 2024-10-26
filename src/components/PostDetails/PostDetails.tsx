@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import "./PostDetails.css";
 import fetch from "../../utilities/fetch";
 import { Post } from "../PostCard/PostCard";
 import { useParams } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
+import { useNavigate } from "react-router-dom";
+
 
 function PostDetails() {
     const { id } = useParams();
     const [post, setPost] = useState<Post | undefined>();
+    const user = useContext(UserContext);
+    const [isOwner, setIsOwner] = useState(false);
+    const navigate = useNavigate();
+    const [isDeleted, setIsDeleted] = useState(false);
 
     useEffect(() => {
         const getPost = async () => {
@@ -16,10 +23,19 @@ function PostDetails() {
                 const foundPost = result.post;
                 console.log(foundPost);
                 setPost(foundPost);
+                setIsOwner(foundPost.postedBy == user?.itemID);
             } catch { }
         };
         getPost();
     }, [id]);
+
+    async function deletePost(){
+        await fetch("delete", `/posts/${id}`);
+        setTimeout(() => {
+            navigate("/");
+        }, 3000);
+        setIsDeleted(true);
+    }
 
     return (
         <div className="no-deco post-card">
@@ -43,11 +59,15 @@ function PostDetails() {
                                 <span>Tags: {
                                     Object.keys(post.tags).map((tag: string) => <>{tag} </>)
                                 }</span>}
+                            {isOwner && <button onClick={deletePost}>Delete</button>}
                         </div>
                     </>
                     :
                     <p>Loading / Post Not Found</p>
             }
+            {isDeleted && <div className="post-delete">
+                Deleting Post...
+            </div>}
         </div>
     );
 }
