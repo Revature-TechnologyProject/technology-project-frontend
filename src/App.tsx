@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import ProfileUpdate from './pages/ProfileUpdate';
 import { User, UserContext } from './context/userContext';
 import CreatePost from './pages/Post';
+import PostDetails from './components/PostDetails/PostDetails';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register setUser={setUser}/>}/>
           <Route path="/post" element={<CreatePost/>}/>
           <Route path="/profile/update" element={<ProfileUpdate setUser={setUser}/>}/>
+          <Route path="/posts/:id" element={<PostDetails/>}/>
         </Routes>
       </UserContext.Provider>
     </>
