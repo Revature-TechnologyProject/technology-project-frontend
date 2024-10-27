@@ -29,7 +29,7 @@ function PostDetails() {
 
     async function like(){
         try{
-            await fetch("put", `/posts/${id}/likes`, {}, {like: 1});
+            await fetch("patch", `/posts/${id}/likes`, {}, {like: 1});
             const result = await fetch("get", `/posts/${id}`);
             const foundPost = result.post;
             setPost(foundPost);
