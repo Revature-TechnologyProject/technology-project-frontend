@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import "./PostDetails.css";
 import fetch from "../../utilities/fetch";
 import { Post } from "../PostCard/PostCard";
 import { useParams } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 
 function PostDetails() {
     const { id } = useParams();
     const [post, setPost] = useState<Post | undefined>();
+    const user = useContext(UserContext);
+    const [isOwner, setIsOwner] = useState(false);
 
     useEffect(() => {
         const getPost = async () => {
@@ -43,6 +46,7 @@ function PostDetails() {
                                 <span>Tags: {
                                     Object.keys(post.tags).map((tag: string) => <>{tag} </>)
                                 }</span>}
+                            {isOwner && <button onClick={updatePost}>Delete</button>}
                         </div>
                     </>
                     :
