@@ -13,7 +13,7 @@ function Reply() {
 
     async function reply(text: string) {
         try {
-            await fetch("patch", `/posts/${id}/replies`, {}, {text});
+            await fetch("PATCH", `/posts/${id}/replies`, {}, {text});
             setError(undefined);
             setDisplaySuccess(true);
             setTimeout(() => {

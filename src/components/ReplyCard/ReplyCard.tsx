@@ -21,25 +21,21 @@ const ReplyCard = ({reply}: Props) => {
             setIsOwner(postedBy == currentUser?.itemID);
         }
         getUsername();
-    }, [postedBy]);
+    }, [isDeleted]);
 
     async function deleteReply(){
         await fetch("delete", `/posts/${id}/replies/${itemID}`);
         setIsDeleted(true);
-        setTimeout(() => {
-            navigate("/");
-        }, 2000);
     }
 
     return (
-        <div className="no-deco">
+        <div className="no-deco">{ !isDeleted &&
             <div className="post-card">
                 <div className="post-title">{poster?.username}</div>
                 <div>{description}</div>
                 {isOwner && <button onClick={deleteReply}>Delete</button>}
-                {isDeleted && <div>Deleting comment...</div>}
             </div>
-        </div>
+        }</div>
     )
 }
 
