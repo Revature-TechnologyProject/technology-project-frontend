@@ -1,0 +1,33 @@
+.song-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+@media (max-width: 1330px) {
+    .song-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 995px) {
+    .song-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .song-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.song-button {
+    max-width: 325px; /* The size of the images from the spotify API + 25px for padding */
+}
+
+.song-button-image {
+    max-width: 300px; /* If the image size ever changes in the future, force it to scale down to a max width of 300px */
+    aspect-ratio: 1/1;
+}
