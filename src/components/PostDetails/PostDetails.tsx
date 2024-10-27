@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./PostDetails.css";
 import fetch from "../../utilities/fetch";
 import { Post } from "../PostCard/PostCard";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 
 function PostDetails() {
@@ -19,6 +19,7 @@ function PostDetails() {
                 const foundPost = result.post;
                 console.log(foundPost);
                 setPost(foundPost);
+                setIsOwner(user?.itemID == foundPost.postedBy);
             } catch { }
         };
         getPost();
@@ -46,7 +47,7 @@ function PostDetails() {
                                 <span>Tags: {
                                     Object.keys(post.tags).map((tag: string) => <>{tag} </>)
                                 }</span>}
-                            {isOwner && <button onClick={updatePost}>Delete</button>}
+                            {isOwner && <Link to={`/posts/${id}/update`}>Edit</Link>}
                         </div>
                     </>
                     :
