@@ -21,7 +21,7 @@ function Post() {
             setDisplaySuccess(true);
             setTimeout(() => {
                 navigate(`/posts/${post.itemID}`)
-            }, 3000);
+            }, 3000).unref();
         } catch (err: any) {
             setError(err.error);
         }
