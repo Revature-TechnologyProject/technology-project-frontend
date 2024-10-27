@@ -23,7 +23,7 @@ function Login({setUser}: props) {
             setDisplaySuccess(true);
             setTimeout(() => {
                 navigate("/"); // Don't use window.location otherwise the page refreshes
-            }, 3000).unref();
+            }, 3000);
         } catch (err: any) {
             setError(err.error); 
         }

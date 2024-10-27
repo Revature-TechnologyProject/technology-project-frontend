@@ -2,6 +2,8 @@ import React, {useState} from "react";
 
 import "./SongForm.css";
 import fetchJson from "../../utilities/fetch";
+import PostCard from "../PostCard";
+import { Link } from "react-router-dom";
 
 interface Props {
     setSong: React.Dispatch<React.SetStateAction<Song|undefined>>
