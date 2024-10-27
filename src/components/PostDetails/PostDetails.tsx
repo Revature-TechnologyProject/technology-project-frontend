@@ -1,21 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import "./PostDetails.css";
 import fetch from "../../utilities/fetch";
 import { Post } from "../PostCard/PostCard";
-import { useParams } from "react-router-dom";
+import ReplyCard from "../../components/ReplyCard";
+import { User } from "../../context/userContext";
+import { useParams, Link } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 
 function PostDetails() {
+    const user = useContext(UserContext);
     const { id } = useParams();
     const [post, setPost] = useState<Post | undefined>();
+    const [poster, setPoster] = useState<User | undefined>();
+    const [replies, setReplies] = useState<any>([]);
 
     useEffect(() => {
         const getPost = async () => {
             try {
                 const result = await fetch("get", `/posts/${id}`);
                 const foundPost = result.post;
-                console.log(foundPost);
+                const pPost = await fetch("get", `/users/${foundPost.postedBy}`);
+                setPoster(pPost.user);
                 setPost(foundPost);
+                setReplies(foundPost.replies.map((post: any) => <ReplyCard reply={post} key={post.itemID}/>));
             } catch { }
         };
         getPost();
@@ -26,6 +34,7 @@ function PostDetails() {
             {
                 post ?
                     <>
+                        <div>{poster?.username}</div>
                         <h3 className="post-title">{post.title}</h3>
                         <div className="post-song">
                             <img className="song-image" src={post.song?.image} alt="album cover" />
@@ -44,6 +53,10 @@ function PostDetails() {
                                     Object.keys(post.tags).map((tag: string) => <>{tag} </>)
                                 }</span>}
                         </div>
+                        <div className="post-metadata flex align-cent justify-between">
+                            {user?.itemID && <Link to={`/posts/${id}/reply`}>Comment</Link>}
+                        </div>
+                        <div>{replies}</div>
                     </>
                     :
                     <p>Loading / Post Not Found</p>
