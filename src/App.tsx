@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import Register from './pages/Register';
 import { User, UserContext } from './context/userContext';
 import CreatePost from './pages/Post';
+import Search from './pages/Search';
 import PostDetails from './components/PostDetails/PostDetails';
 import Reply from './pages/Reply';
 import PostUpdate from './pages/PostUpdate';
@@ -20,6 +21,7 @@ function App() {
       <UserContext.Provider value={user}>
         <Header/>
         <Routes>
+          <Route path="/search" element={<Search/>}/>
           <Route path="/login" element={<Login setUser={setUser}/>}/>
           <Route path="/profile/:id" element={<Profile/>}/>
           <Route path="/register" element={<Register setUser={setUser}/>}/>
