@@ -26,7 +26,7 @@ function PostUpdateForm({onSubmit, error}: props) {
         <form onSubmit={submit}>
             <div className="form-group">
                 <label htmlFor="titleInput">Title</label>
-                <input type="text" className="input" id="usernameInput" placeholder="Username" onChange={(e: any) => {setTitle(e.target.value)}}/>
+                <input type="text" className="input" id="usernameInput" placeholder="Title" onChange={(e: any) => {setTitle(e.target.value)}}/>
             </div>
             <div className="form-group">
                 <label htmlFor="descriptionInput">Description</label>
