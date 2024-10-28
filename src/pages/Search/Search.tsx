@@ -18,13 +18,11 @@ function Search() {
         loadMore()
     }, [postsFound]);
 
-    async function search(tags: string, inclusive: string) {
+    async function search(tags: string, inclusive: any) {
         try {
             setPage(5);
             setStillMore(true);
-            if (inclusive !== "1"){
-                inclusive = "0";
-            }
+            inclusive = inclusive ? "1" : "0";
             const {Posts} = await fetch("get", `/posts/tags/search?tags=${tags}&inclusive=${inclusive}`);
             setPostFound(Posts);
             setDisplaySuccess(true);

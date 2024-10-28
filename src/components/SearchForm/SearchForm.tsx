@@ -25,7 +25,7 @@ function SearchForm({onSubmit, error}: props) {
             </div>
             <div className="check-group">
                 <label htmlFor="passwordInput">Inclusive</label>
-                <input type="checkbox" className="inputcheck" id="inclusiveInput" onChange={(e: any) => {setInclusive(e.target.value)}}/>
+                <input type="checkbox" className="inputcheck" id="inclusiveInput" onChange={(e: any) => {setInclusive(e.target.checked)}}/>
             </div>
             {error && <small className="error">{error}</small>}
             <button>Search</button>
