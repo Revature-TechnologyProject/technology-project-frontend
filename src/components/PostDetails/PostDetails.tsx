@@ -7,15 +7,19 @@ import ReplyCard from "../../components/ReplyCard";
 import { User } from "../../context/userContext";
 import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
+import { useNavigate } from "react-router-dom";
+
 
 function PostDetails() {
     const { id } = useParams();
     const [post, setPost] = useState<Post | undefined>();
     const [poster, setPoster] = useState<User | undefined>();
     const [replies, setReplies] = useState<any>([]);
+    const [likes, setLikes] = useState(0);
     const user = useContext(UserContext);
     const [isOwner, setIsOwner] = useState(false);
-    const [likes, setLikes] = useState(0);
+    const navigate = useNavigate();
+    const [isDeleted, setIsDeleted] = useState(false);
 
     useEffect(() => {
         const getPost = async () => {
@@ -61,6 +65,14 @@ function PostDetails() {
         catch{}
     }
 
+    async function deletePost(){
+        await fetch("delete", `/posts/${id}`);
+        setTimeout(() => {
+            navigate("/");
+        }, 3000);
+        setIsDeleted(true);
+    }
+
     return (
         <div className="no-deco post-card">
             {
@@ -75,9 +87,9 @@ function PostDetails() {
                         <div className="post-metadata flex align-cent justify-between">
                             <span>Score: {post.score}/100</span>
                             <span>
-                                <button onClick={like}>Like</button>
+                                { user && <button onClick={like}>Like</button>}
                                 | {likes} |
-                                <button onClick={dislike}>Dislike</button>
+                                {user && <button onClick={dislike}>Dislike</button>}
                             </span>
                         </div>
                         <p>
@@ -88,7 +100,12 @@ function PostDetails() {
                                 <span>Tags: {
                                     Object.keys(post.tags).map((tag: string) => <>{tag} </>)
                                 }</span>}
+                        </div>
+                        <div>
                             {isOwner && <Link to={`/posts/${id}/update`}>Edit</Link>}
+                        </div>
+                        <div>
+                            {isOwner && <button onClick={deletePost}>Delete</button>}
                         </div>
                         <div className="post-metadata flex align-cent justify-between">
                             {user?.itemID && <Link to={`/posts/${id}/reply`}>Comment</Link>}
@@ -98,6 +115,9 @@ function PostDetails() {
                     :
                     <p>Loading / Post Not Found</p>
             }
+            {isDeleted && <div className="post-delete">
+                Deleting Post...
+            </div>}
         </div>
     );
 }
