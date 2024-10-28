@@ -15,6 +15,7 @@ function PostDetails() {
     const [replies, setReplies] = useState<any>([]);
     const user = useContext(UserContext);
     const [isOwner, setIsOwner] = useState(false);
+    const [likes, setLikes] = useState(0);
 
     useEffect(() => {
         const getPost = async () => {
@@ -26,10 +27,39 @@ function PostDetails() {
                 setPost(foundPost);
                 setIsOwner(user?.itemID == foundPost.postedBy);
                 setReplies(foundPost.replies.map((post: any) => <ReplyCard reply={post} key={post.itemID}/>));
+                const total = foundPost?.likedBy.reduce((n:any, {like}:any) => n + like, 0);
+                setLikes(total);
             } catch { }
         };
         getPost();
     }, [id]);
+
+    useEffect(() => {
+    }, [likes]);
+
+    async function like(){
+        try{
+            await fetch("PATCH", `/posts/${id}/likes`, {}, {like: 1});
+            const result = await fetch("get", `/posts/${id}`);
+            const foundPost = result.post;
+            setPost(foundPost);
+            const total = foundPost?.likedBy.reduce((n:any, {like}:any) => n + like, 0);
+            setLikes(total);
+        }
+        catch{}
+    }
+
+    async function dislike(){
+        try{
+            await fetch("PATCH", `/posts/${id}/likes`, {}, {like: -1});
+            const result = await fetch("get", `/posts/${id}`);
+            const foundPost = result.post;
+            setPost(foundPost);
+            const total = foundPost?.likedBy.reduce((n:any, {like}:any) => n + like, 0);
+            setLikes(total);
+        }
+        catch{}
+    }
 
     return (
         <div className="no-deco post-card">
@@ -44,7 +74,11 @@ function PostDetails() {
                         </div>
                         <div className="post-metadata flex align-cent justify-between">
                             <span>Score: {post.score}/100</span>
-                            <span>Likes: {post.likedBy.reduce((n, {like}:any) => n + like, 0)}</span>
+                            <span>
+                                <button onClick={like}>Like</button>
+                                | {likes} |
+                                <button onClick={dislike}>Dislike</button>
+                            </span>
                         </div>
                         <p>
                             {post.description}
