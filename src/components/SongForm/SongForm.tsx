@@ -2,8 +2,6 @@ import React, {useState} from "react";
 
 import "./SongForm.css";
 import fetchJson from "../../utilities/fetch";
-import PostCard from "../PostCard";
-import { Link } from "react-router-dom";
 
 interface Props {
     setSong: React.Dispatch<React.SetStateAction<Song|undefined>>
@@ -39,6 +37,7 @@ const SongForm = ({setSong}: Props) => {
     const [songQuery, setSongQuery] = useState<SongQuery>({});
     const [previousURL, setPreviousURL] = useState("");
     const [nextURL, setNextURL] = useState("");
+    const [yearError, setYearError] = useState("");
 
     const findSong = async (e: any) => {
         e.preventDefault();
@@ -64,6 +63,7 @@ const SongForm = ({setSong}: Props) => {
             setFoundSongs(songs);
             setNextURL(showMore);
             setPreviousURL(showPrevious);
+            window.scrollTo(0,0)
         } catch (err: any) {
             setSongError(err);
         }
@@ -71,7 +71,7 @@ const SongForm = ({setSong}: Props) => {
 
     const updateYearStart = (e: any) => {
         if (e.target.value.match(/[A-Za-z]+/) !== null) {
-            setSongError("Year must be numbers only");
+            setYearError("Year start must be numbers only, defaulting to an empty field");
             return;
         }
         if (songQuery?.year?.includes("-")) {
@@ -80,16 +80,16 @@ const SongForm = ({setSong}: Props) => {
         } else {
             setSongQuery((prev) => ({...prev, year: e.target.value}));
         }
-        setSongError("");
+        setYearError("");
     }
 
     const updateYearEnd = (e: any) => {
         if (e.target.value.match(/[A-Za-z]+/) !== null) {
-            setSongError("Year must be numbers only");
+            setYearError("Year end must be numbers only, defaulting to an empty field");
             return;
         }
         if (!songQuery.year) {
-            setSongError("Year start needed for year end to be included");
+            setYearError("Year start needed for year end to be included");
             return;
         }
         if (songQuery.year.includes("-")) {
@@ -99,12 +99,13 @@ const SongForm = ({setSong}: Props) => {
             setSongQuery((prev) => ({...prev, year: `${songQuery.year}-${e.target.value}`}));
 
         }
-        setSongError("");
+        setYearError("");
     }
 
     const clearSongSearch = () => {
         setSongQuery({});
         setFoundSongs([]);
+        setYearError("");
     }
 
     return (
@@ -138,23 +139,28 @@ const SongForm = ({setSong}: Props) => {
                         <input type="text" id="year-end" placeholder="2001" onChange={updateYearEnd}/>
                     </div>
                 </div>
+                {yearError && <small className="error">{yearError}</small>}
                 {songError && <small className="error">{songError}</small>}
                 <button>Search for Songs</button>
             </form>
             </>
         :
-            <div>
-                {foundSongs.map((song) => {
-                    return (
-                        <button key={song.spotifyId} onClick={() => {setSong(song)}}>
-                            <img src={song.image} alt="album cover"/>
-                            <div>{song.name} by {song.artists[0].name}{song.artists.slice(1).map((artist) => {return(<span key={artist.id}> and {artist.name}</span>)})}</div>
-                        </button>
-                    )
-                })}
-                {previousURL && <button onClick={() => paginate(previousURL)}>Previous</button>}
-                <button onClick={clearSongSearch}>Clear Song Search</button>
-                {nextURL && <button onClick={() => paginate(nextURL)}>Show More</button>}
+            <div className="flex col justify-center align-center g5">
+                <div className="song-container">
+                    {foundSongs.map((song) => {
+                        return (
+                            <button key={song.spotifyId} className="song-button" onClick={() => {setSong(song)}}>
+                                <img src={song.image} alt="album cover" className="song-button-image"/>
+                                <div>{song.name} by {song.artists[0].name}{song.artists.slice(1).map((artist) => {return(<span key={artist.id}> and {artist.name}</span>)})}</div>
+                            </button>
+                        )
+                    })}
+                </div>
+                <div className="flex justify-center g10 align-center">
+                    {previousURL && <button onClick={() => paginate(previousURL)}>Previous</button>}
+                    <button onClick={clearSongSearch}>Clear Search</button>
+                    {nextURL && <button onClick={() => paginate(nextURL)}>Next</button>}
+                </div>
             </div>
         }
         </>
