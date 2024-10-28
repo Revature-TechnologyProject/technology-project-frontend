@@ -19,13 +19,13 @@ function ProfileUpdate({setUser}: props){
     async function update(username: string, bio: string, genres: string[]) {
         const userID = user ? user.itemID : "0";
         try {
-            const {updatedUser, updatedToken} = await fetch("put", `/users/${userID}`, {}, {username, bio, genres});
+            const {newUserInfo, updatedToken} = await fetch("put", `/users/${userID}`, {}, {username, bio, genres});
             localStorage.setItem("token", updatedToken);
             setDisplaySuccess(true);
-            setUser(updatedUser.Item);
+            setUser(newUserInfo);
             setError(undefined);
             setTimeout(() => {
-                navigate(`/profile/${updatedUser.Item.itemID}`);
+                navigate(`/profile/${newUserInfo.itemID}`);
             }, 3000);
         } catch (err: any) {
             setError(err.error);
