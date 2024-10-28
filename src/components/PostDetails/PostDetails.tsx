@@ -9,11 +9,12 @@ import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 
 function PostDetails() {
-    const user = useContext(UserContext);
     const { id } = useParams();
     const [post, setPost] = useState<Post | undefined>();
     const [poster, setPoster] = useState<User | undefined>();
     const [replies, setReplies] = useState<any>([]);
+    const user = useContext(UserContext);
+    const [isOwner, setIsOwner] = useState(false);
 
     useEffect(() => {
         const getPost = async () => {
@@ -23,6 +24,7 @@ function PostDetails() {
                 const pPost = await fetch("get", `/users/${foundPost.postedBy}`);
                 setPoster(pPost.user);
                 setPost(foundPost);
+                setIsOwner(user?.itemID == foundPost.postedBy);
                 setReplies(foundPost.replies.map((post: any) => <ReplyCard reply={post} key={post.itemID}/>));
             } catch { }
         };
@@ -52,6 +54,7 @@ function PostDetails() {
                                 <span>Tags: {
                                     Object.keys(post.tags).map((tag: string) => <>{tag} </>)
                                 }</span>}
+                            {isOwner && <Link to={`/posts/${id}/update`}>Edit</Link>}
                         </div>
                         <div className="post-metadata flex align-cent justify-between">
                             {user?.itemID && <Link to={`/posts/${id}/reply`}>Comment</Link>}
