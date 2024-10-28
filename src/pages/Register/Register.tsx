@@ -23,7 +23,7 @@ function Register({ setUser }: props) {
             setDisplaySuccess(true);
             setTimeout(() => {
                 navigate("/"); // Don't use window.location otherwise the page refreshes
-            }, 3000);
+            }, 3000).unref();
         } catch (err: any) {
             setError(err.error);
         }
