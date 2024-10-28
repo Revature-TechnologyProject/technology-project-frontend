@@ -87,9 +87,9 @@ function PostDetails() {
                         <div className="post-metadata flex align-cent justify-between">
                             <span>Score: {post.score}/100</span>
                             <span>
-                                <button onClick={like}>Like</button>
+                                { user && <button onClick={like}>Like</button>}
                                 | {likes} |
-                                <button onClick={dislike}>Dislike</button>
+                                {user && <button onClick={dislike}>Dislike</button>}
                             </span>
                         </div>
                         <p>
