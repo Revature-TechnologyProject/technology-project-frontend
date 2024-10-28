@@ -14,12 +14,12 @@ function Profile() {
         const getPosts = async () => {
             try {
                 const {posts} = await fetch("get", "/posts");
-                const res = posts.sort(({time:a}:any, {time:b}:any) => b-a);
+                const res = posts.sort(({time:a}:any, {time:b}:any) => a-b);
                 if (posts.length < 5){
-                    setPosts(res);
+                    setPosts(res.reverse());
                 }
                 else{
-                    setPosts(res.slice(posts.length-5, posts.length));
+                    setPosts(res.slice(posts.length-5, posts.length).reverse());
                 }
             } catch {
                // Do nothing if error
