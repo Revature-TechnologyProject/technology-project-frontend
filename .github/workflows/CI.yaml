@@ -5,19 +5,17 @@ name: Revature Tech Project CI CD
 
 on:
   push: 
-    branches:
-      - "main"
-      - "dev"
-  pull_request: # Only runs on types [opened, reopened, synchronize]. Synchronize catches any updates made to a PR
-    branches: 
-      - "main"
-      - "dev"
+  #   branches:
+  #     - "main"
+  #     - "dev"
+  # pull_request: # Only runs on types [opened, reopened, synchronize]. Synchronize catches any updates made to a PR
+  #   branches: 
+  #     - "main"
+  #     - "dev"
 
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-    environment:
-      CI: true
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js 20.x
@@ -26,4 +24,4 @@ jobs:
         node-version: '20.x'
         cache: 'npm'
     - run: npm ci
-    - run: npm test
+    - run: CI=true npm test
