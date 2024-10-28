@@ -7,7 +7,6 @@ import ReplyCard from "../../components/ReplyCard";
 import { User } from "../../context/userContext";
 import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
-import { UserContext } from "../../context/userContext";
 
 function PostDetails() {
     const { id } = useParams();
