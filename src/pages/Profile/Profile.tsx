@@ -17,7 +17,6 @@ function Profile() {
         const getUser = async () => {
             try {
                 const {user} = await fetch("get", `/users/${id}`);
-                console.log(user);
                 setUser(user);
             } catch {
                 // Do nothing if error
@@ -57,7 +56,7 @@ function Profile() {
                     </div>
                 </section>
                 <nav className="updatelink">
-                    {<NavLink to="/profile/update">Change Profile</NavLink>}
+                    {<NavLink to={`/profile/${id}/update`}>Change Profile</NavLink>}
                 </nav>
                 <section id="profile-posts" className="flex g10 col">
                     <h2>Posts</h2>
