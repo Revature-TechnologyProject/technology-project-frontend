@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 
 import "./PostForm.css";
-import fetch from "../../utilities/fetch";
 import { Song } from "../SongForm/SongForm";
 
 export interface PostDetails {
