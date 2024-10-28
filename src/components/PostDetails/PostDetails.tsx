@@ -59,9 +59,6 @@ function PostDetails() {
                         <div className="post-metadata flex align-cent justify-between">
                             {user?.itemID && <Link to={`/posts/${id}/reply`}>Comment</Link>}
                         </div>
-                        <div className="post-metadata flex align-cent justify-between">
-                            {user?.itemID && <Link to={`/posts/${id}/reply`}>Comment</Link>}
-                        </div>
                         <div>{replies}</div>
                     </>
                     :
