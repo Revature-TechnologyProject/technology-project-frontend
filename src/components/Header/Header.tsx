@@ -14,6 +14,9 @@ function Header() {
             <Link to="/" id="home">
                 The Song Study Site
             </Link>
+            <Link to="/search">
+                Search
+            </Link>
             <nav>
                 {!user ? 
                     <>

@@ -18,24 +18,3 @@
     margin-block: 5px;
     padding-inline: 5px;
 }
-
-.post-song {
-    border-bottom: solid var(--secondary-color) 1px;
-}
-
-.post-metadata {
-    margin-inline: 20px;
-}
-
-.song-image {
-    max-width: 100%;
-    height: auto;
-}
-
-.song-name {
-    margin-block: 0;
-}
-
-.post-delete {
-    color: red;
-}

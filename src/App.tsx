@@ -8,8 +8,11 @@ import Register from './pages/Register';
 import ProfileUpdate from './pages/ProfileUpdate';
 import { User, UserContext } from './context/userContext';
 import CreatePost from './pages/Post';
+import Search from './pages/Search';
 import PostDetails from './components/PostDetails/PostDetails';
-
+import Reply from './pages/Reply';
+import PostUpdate from './pages/PostUpdate';
+import Home from './pages/Home';
 
 function App() {
   const [user, setUser] = useState<User>();
@@ -19,12 +22,16 @@ function App() {
       <UserContext.Provider value={user}>
         <Header/>
         <Routes>
+          <Route path="/search" element={<Search/>}/>
           <Route path="/login" element={<Login setUser={setUser}/>}/>
           <Route path="/profile/:id" element={<Profile/>}/>
           <Route path="/register" element={<Register setUser={setUser}/>}/>
           <Route path="/post" element={<CreatePost/>}/>
+          <Route path="/" element={<Home/>}/>
           <Route path="/profile/:id/update" element={<ProfileUpdate setUser={setUser}/>}/>
           <Route path="/posts/:id" element={<PostDetails/>}/>
+          <Route path="/posts/:id/update" element={<PostUpdate/>}/>
+          <Route path="/posts/:id/reply" element={<Reply/>}/>
         </Routes>
       </UserContext.Provider>
     </>
