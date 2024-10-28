@@ -1,0 +1,14 @@
+.link {
+    color: #454545;
+    text-decoration: none;
+    font-size: var(--font-size);
+}
+
+.active {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.link:hover {
+    color: var(--secondary-color);
+}
