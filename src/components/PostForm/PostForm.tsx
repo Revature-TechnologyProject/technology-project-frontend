@@ -41,11 +41,11 @@ function PostForm({song, onSubmit, error}: props) {
         <form onSubmit={submit}>
             <div className="form-group">
                 <label htmlFor="usernameInput">Title*</label>
-                <input type="text" id="usernameInput" placeholder="Title" required onChange={(e: any) => {setTitle(e.target.value)}}/>
+                <input type="text" id="usernameInput" placeholder="Post title" required onChange={(e: any) => {setTitle(e.target.value)}}/>
             </div>
             <div className="form-group">
                 <label htmlFor="scoreInput">Review Score*</label>
-                <input type="text" inputMode="numeric" pattern="\d*" id="scoreInput" placeholder="Score out of 100" required onChange={(e: any) => setScore(e.target.value)}/>
+                <input type="text" inputMode="numeric" pattern="\d*" id="scoreInput" placeholder="Score from 0 to 100" required onChange={(e: any) => setScore(e.target.value)}/>
             </div>
             <div className="form-group">
                 <label htmlFor="descriptionInput">Description*</label>

@@ -21,6 +21,7 @@ function Login({setUser}: props) {
             localStorage.setItem("token", token);
             setUser(user);
             setDisplaySuccess(true);
+            setError(undefined);
             setTimeout(() => {
                 navigate("/"); // Don't use window.location otherwise the page refreshes
             }, 3000).unref();
