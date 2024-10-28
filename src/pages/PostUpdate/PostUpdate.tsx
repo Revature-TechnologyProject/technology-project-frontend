@@ -14,7 +14,7 @@ function PostUpdate() {
 
     async function update(description: string | undefined, title: string | undefined, score: number | undefined) {
         try {
-            const { postId } = await fetch("put", `/posts/${id}`, {}, {description, title, score});
+            const { postId } = await fetch("PATCH", `/posts/${id}`, {}, {description, title, score});
             setError(undefined);
             setDisplaySuccess(true);
             setTimeout(() => {
