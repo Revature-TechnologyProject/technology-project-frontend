@@ -2,8 +2,8 @@ const BASE_URL = process.env.NODE_ENV === "production" ?
     "https://3.23.105.150:3001" :
     "http://localhost:3001";
 
-async function fetchJson(method: string, path: string, body?: {}, q?: {}) {
-    const options: RequestInit = {
+async function fetchJson(method: string, path: string, q?: {}, body?: {}) {
+    const options: RequestInit= {
         headers: createHeaders(),
         mode: "cors",
         method,

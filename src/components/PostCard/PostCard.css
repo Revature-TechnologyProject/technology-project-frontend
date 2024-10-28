@@ -1,0 +1,37 @@
+.post-card {
+    border-radius: 20px;
+    border: solid var(--secondary-color) 1px;
+    min-height: 100px;
+    box-shadow: 5px 5px 10px #888888;
+    width: 100%;
+    text-align: center;
+}
+
+.no-deco {
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
+.post-title {
+    border-bottom: solid var(--secondary-color) 1px;
+    text-decoration: underline;
+    margin-block: 5px;
+    padding-inline: 5px;
+}
+
+.post-song {
+    border-bottom: solid var(--secondary-color) 1px;
+}
+
+.post-metadata {
+    margin-inline: 20px;
+}
+
+.song-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.song-name {
+    margin-block: 0;
+}
