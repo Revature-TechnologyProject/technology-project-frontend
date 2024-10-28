@@ -100,8 +100,12 @@ function PostDetails() {
                                 <span>Tags: {
                                     Object.keys(post.tags).map((tag: string) => <>{tag} </>)
                                 }</span>}
-                            {isOwner && <button onClick={deletePost}>Delete</button>}
+                        </div>
+                        <div>
                             {isOwner && <Link to={`/posts/${id}/update`}>Edit</Link>}
+                        </div>
+                        <div>
+                            {isOwner && <button onClick={deletePost}>Delete</button>}
                         </div>
                         <div className="post-metadata flex align-cent justify-between">
                             {user?.itemID && <Link to={`/posts/${id}/reply`}>Comment</Link>}
