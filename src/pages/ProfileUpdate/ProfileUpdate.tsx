@@ -26,7 +26,7 @@ function ProfileUpdate({setUser}: props){
             setError(undefined);
             setTimeout(() => {
                 navigate(`/profile/${updatedUser.Item.itemID}`);
-            }, 3000)
+            }, 3000);
         } catch (err: any) {
             setError(err.error);
         }
