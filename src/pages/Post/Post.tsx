@@ -11,17 +11,13 @@ function Post() {
 
     const navigate = useNavigate();
     const [error, setError] = useState<string | undefined>(undefined);
-    const [displaySuccess, setDisplaySuccess] = useState(false);
     const [song, setSong] = useState<Song | undefined>();
 
     async function post(postDetails: PostDetails) {
         try {
             const {post} = await fetch("post", "/posts", {}, postDetails);
             setError(undefined);
-            setDisplaySuccess(true);
-            setTimeout(() => {
-                navigate(`/posts/${post.itemID}`)
-            }, 3000);
+            navigate(`/posts/${post.itemID}`)
         } catch (err: any) {
             setError(err.error);
         }
@@ -39,15 +35,14 @@ function Post() {
                 :
                 <>
                     <h2>Review Details</h2>
-                    <div>
+                    <div className="flex col justify-center align-center">
                         <img src={song.image} alt="album cover"/>
-                        <div>{song.name}</div>
+                        <div>{song.name} by {song.artists[0].name}{song.artists.slice(1).map((artist) => {return(<span key={artist.id}> and {artist.name}</span>)})}</div>
                     </div>
                     <button onClick={() => setSong(undefined)}>Pick a Different Song</button>
                     <PostForm onSubmit={post} error={error} song={song}/>
                 </>
                 }
-                {displaySuccess && <h4>Created Post. Navigating to post in 3 seconds</h4>}
             </main>
         </>
     )

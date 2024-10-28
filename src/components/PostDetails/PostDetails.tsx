@@ -3,12 +3,19 @@ import React, { useContext, useEffect, useState } from "react";
 import "./PostDetails.css";
 import fetch from "../../utilities/fetch";
 import { Post } from "../PostCard/PostCard";
-import { useParams } from "react-router-dom";
+import ReplyCard from "../../components/ReplyCard";
+import { User } from "../../context/userContext";
+import { useParams, Link } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 import { UserContext } from "../../context/userContext";
 
 function PostDetails() {
     const { id } = useParams();
     const [post, setPost] = useState<Post | undefined>();
+    const [poster, setPoster] = useState<User | undefined>();
+    const [replies, setReplies] = useState<any>([]);
+    const user = useContext(UserContext);
+    const [isOwner, setIsOwner] = useState(false);
     const [likes, setLikes] = useState(0);
 
     useEffect(() => {
@@ -16,7 +23,11 @@ function PostDetails() {
             try {
                 const result = await fetch("get", `/posts/${id}`);
                 const foundPost = result.post;
+                const pPost = await fetch("get", `/users/${foundPost.postedBy}`);
+                setPoster(pPost.user);
                 setPost(foundPost);
+                setIsOwner(user?.itemID == foundPost.postedBy);
+                setReplies(foundPost.replies.map((post: any) => <ReplyCard reply={post} key={post.itemID}/>));
                 const total = foundPost?.likedBy.reduce((n:any, {like}:any) => n + like, 0);
                 setLikes(total);
             } catch { }
@@ -56,6 +67,7 @@ function PostDetails() {
             {
                 post ?
                     <>
+                        <div>{poster?.username}</div>
                         <h3 className="post-title">{post.title}</h3>
                         <div className="post-song">
                             <img className="song-image" src={post.song?.image} alt="album cover" />
@@ -77,7 +89,12 @@ function PostDetails() {
                                 <span>Tags: {
                                     Object.keys(post.tags).map((tag: string) => <>{tag} </>)
                                 }</span>}
+                            {isOwner && <Link to={`/posts/${id}/update`}>Edit</Link>}
                         </div>
+                        <div className="post-metadata flex align-cent justify-between">
+                            {user?.itemID && <Link to={`/posts/${id}/reply`}>Comment</Link>}
+                        </div>
+                        <div>{replies}</div>
                     </>
                     :
                     <p>Loading / Post Not Found</p>
