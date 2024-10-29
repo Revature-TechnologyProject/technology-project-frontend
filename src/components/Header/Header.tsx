@@ -12,7 +12,7 @@ function Header() {
     return(
         <header>
             <Link to="/" id="home">
-                The Song Study Site
+                Harmony Hub
             </Link>
             <Link to="/search">
                 Search
